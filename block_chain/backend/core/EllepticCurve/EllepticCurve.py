@@ -1,24 +1,26 @@
-""" 
+"""
 Copyright (c) 2021 Codiesalert.com
 These scripts should be used for commercial purpose without Codies Alert Permission
 Any violations may lead to legal action
 """
 
+from io import BytesIO
+from Crypto.Hash import RIPEMD160
+import hashlib
+import hmac
+
+from random import randint
+
 A = 0
 B = 7
 
-P = 2 ** 256 - 2 ** 32 - 977
+P = 2**256 - 2**32 - 977
 
 N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 BASE58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
-from random import randint
-import hmac
-import hashlib
 
 # Had to install Cryto Hash because RIPEMD160 is not available in hashlib
-from Crypto.Hash import RIPEMD160
-from io import BytesIO
 
 
 class FieldElement:
@@ -71,7 +73,7 @@ class FieldElement:
     def __pow__(self, exponent):
         n = exponent % (self.prime - 1)
         num = pow(self.num, n, self.prime)
-        
+
         return self.__class__(num, self.prime)
 
     def __truediv__(self, other):
@@ -100,7 +102,7 @@ class Point:
         self.y = y
         if self.x is None and self.y is None:
             return
-        if self.y ** 2 != self.x ** 3 + a * x + b:
+        if self.y**2 != self.x**3 + a * x + b:
             raise ValueError("({}, {}) is not on the curve".format(x, y))
 
     # end::source1[]
@@ -151,7 +153,7 @@ class Point:
         # y3=s*(x1-x3)-y1
         if self.x != other.x:
             s = (other.y - self.y) / (other.x - self.x)
-            x = s ** 2 - self.x - other.x
+            x = s**2 - self.x - other.x
             y = s * (self.x - x) - self.y
             return self.__class__(x, y, self.a, self.b)
 
@@ -168,8 +170,8 @@ class Point:
         # x3=s**2-2*x1
         # y3=s*(x1-x3)-y1
         if self == other:
-            s = (3 * self.x ** 2 + self.a) / (2 * self.y)
-            x = s ** 2 - 2 * self.x
+            s = (3 * self.x**2 + self.a) / (2 * self.y)
+            x = s**2 - 2 * self.x
             y = s * (self.x - x) - self.y
             return self.__class__(x, y, self.a, self.b)
 
@@ -287,7 +289,7 @@ class Sha256Point(Point):
         is_even = sec_bin[0] == 2  # <2>
         x = Sha256Field(int.from_bytes(sec_bin[1:], "big"))
         # right side of the equation y^2 = x^3 + 7
-        alpha = x ** 3 + Sha256Field(B)
+        alpha = x**3 + Sha256Field(B)
         # solve for left side
         beta = alpha.sqrt()  # <3>
         if beta.num % 2 == 0:  # <4>

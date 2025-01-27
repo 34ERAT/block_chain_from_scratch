@@ -1,14 +1,14 @@
-""" 
+"""
 Copyright (c) 2021 Codiesalert.com
 These scripts shouldn't be used for commercial purpose without Codies Alert Permission
 Any violations may lead to legal action
 """
-from Blockchain.Backend.util.util import hash160
-from Blockchain.Backend.core.EllepticCurve.EllepticCurve import Sha256Point, Signature
+
+from block_chain.backend.core.EllepticCurve.EllepticCurve import Sha256Point, Signature
+from block_chain.backend.util.util import hash160
 
 
 def op_dup(stack):
-
     if len(stack) < 1:
         return False
     stack.append(stack[-1])
