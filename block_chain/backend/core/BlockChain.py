@@ -2,6 +2,7 @@ from block_chain.backend.core.Block import Block
 from block_chain.backend.core.BlockHeader import BlockHeader
 import sys
 from block_chain.backend.core.DataBase.DataBase import BlockChainDB
+from block_chain.backend.core.Tx import CoibaseTx
 from block_chain.backend.util.util import hash256
 import time
 import json
@@ -34,14 +35,19 @@ class BlockChain:
 
     def addBlock(self, BlockHeight, PrevBlockHash):
         timestamp = int(time.time())
-        Transaction = f"codies Alert sent {BlockHeight} Bitcoins to joe"
-        markleRoot = hash256(Transaction.encode()).hex()
+        # Transaction = f"codies Alert sent {BlockHeight} Bitcoins to joe"
+        coinbase_instance = CoibaseTx(BlockHeight)
+        coinbaseTx = coinbase_instance.CoibaseTransaction()
+        markleRoot = ""
         bits = "ffff001f"
-        blockheader = BlockHeader(
-            VERSION, PrevBlockHash, markleRoot, timestamp, bits)
+        blockheader = BlockHeader(VERSION, PrevBlockHash, markleRoot, timestamp, bits)
         blockheader.mine()
         self.WriteOnDisk(
-            [Block(BlockHeight, 1, blockheader.__dict__, 1, Transaction).__dict__]
+            [
+                Block(
+                    BlockHeight, 1, blockheader.__dict__, 1, coinbaseTx.to_dict()
+                ).__dict__
+            ]
         )
         # print(json.dumps(self.chain))
 

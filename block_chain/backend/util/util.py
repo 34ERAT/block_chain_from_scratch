@@ -1,5 +1,8 @@
 from hashlib import sha256
 from Crypto.Hash import RIPEMD160
+from math import log
+
+from block_chain.backend.core.EllepticCurve.EllepticCurve import BASE58_ALPHABET
 
 
 def hash256(s):
@@ -9,3 +12,34 @@ def hash256(s):
 
 def hash160(s):
     return RIPEMD160.new(sha256(s).digest()).digest()
+
+
+def bytes_needed(n):
+    if n == 0:
+        return 1
+
+    return int(log(n, 256)) + 1
+
+
+def int_to_little__endian(n, length):
+    # init to int_to_little__endian  takes and inter aga returns the little-endian sequence of length
+    return n.to_bytes(length, "little")
+
+
+def little_endian_to_int(b):
+    # takes  a byte  sequence  and  returns  an interger
+    return int.from_bytes(b, "little")
+
+
+def decode_base58(s):
+    num = 0
+    for c in s:
+        num *= 58
+        num += BASE58_ALPHABET.index(c)
+
+    combined = num.to_bytes(25, byteorder="big")
+    checksum = combined[-4:]
+
+    if hash256(combined[:-4])[:4] != checksum:
+        raise ValueError(f"bad Address {checksum} {hash256(combined[:-4][:4])}")
+    return combined[1:-4]

@@ -44,8 +44,8 @@ class account:
             result = BASE58_ALPHABET[mod] + result
 
         PublicAddress = prefix + result
-        print(f"Private key { PrivateKey}")
-        print(f"public address key { PublicAddress}")
+        print(f"Private key {PrivateKey}")
+        print(f"public address key {PublicAddress}")
 
 
 if __name__ == "__main__":
