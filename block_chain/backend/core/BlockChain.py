@@ -42,6 +42,7 @@ class BlockChain:
         bits = "ffff001f"
         blockheader = BlockHeader(VERSION, PrevBlockHash, markleRoot, timestamp, bits)
         blockheader.mine()
+
         self.WriteOnDisk(
             [
                 Block(

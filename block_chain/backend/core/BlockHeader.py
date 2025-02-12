@@ -25,3 +25,5 @@ class BlockHeader:
             ).hex()
             self.nonce += 1
             print(f"mining started {self.nonce}", end="\r")
+
+        print(f"you have mined the block successfully {self.nonce}")

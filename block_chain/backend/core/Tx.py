@@ -49,8 +49,9 @@ class TX:
         """
         if len(self.tx_ins) != 1:
             return False
+
         first_input = self.tx_ins[0]
-        if first_input.prev_tx != "\x00" * 32:
+        if first_input.prev_tx != b"\x00" * 32:
             return False
 
         if first_input.prev_index != 0xFFFFFFFF:
@@ -82,6 +83,7 @@ class TX:
         )
         self.tx_outs[0].script_pubkey = self.tx_outs[0].script_pubkey.__dict__
         self.tx_outs[0] = self.tx_outs[0].__dict__
+        # self.script_sig = self.script_sig.__dict__
         # print(f"i am  a dict now {self.__dict__}")
 
         return self.__dict__
