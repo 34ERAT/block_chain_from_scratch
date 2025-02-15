@@ -38,7 +38,7 @@ class BlockChain:
         # Transaction = f"codies Alert sent {BlockHeight} Bitcoins to joe"
         coinbase_instance = CoibaseTx(BlockHeight)
         coinbaseTx = coinbase_instance.CoibaseTransaction()
-        markleRoot = ""
+        markleRoot = coinbaseTx.TxId
         bits = "ffff001f"
         blockheader = BlockHeader(VERSION, PrevBlockHash, markleRoot, timestamp, bits)
         blockheader.mine()
