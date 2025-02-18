@@ -1,3 +1,4 @@
 blkchain/
-__pycaches__
+__pycache__/
+*.pyc
 block_chain.json
