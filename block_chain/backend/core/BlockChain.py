@@ -16,8 +16,7 @@ VERSION = 1
 
 class BlockChain:
     def __init__(self):
-        # self.chain = []
-        self.GenesisBlock()
+        pass
 
     def WriteOnDisk(self, Block):
         pass
@@ -42,7 +41,9 @@ class BlockChain:
         bits = "ffff001f"
         blockheader = BlockHeader(VERSION, PrevBlockHash, markleRoot, timestamp, bits)
         blockheader.mine()
-
+        print(
+            f"{BlockHeight}  mined successully with nonce value of {blockheader.nonce} "
+        )
         self.WriteOnDisk(
             [
                 Block(
@@ -53,6 +54,9 @@ class BlockChain:
         # print(json.dumps(self.chain))
 
     def main(self):
+        lastBlock = self.get_last_block()
+        if lastBlock is None:
+            self.GenesisBlock()
         while True:
             lastBlock = self.get_last_block()
             BlockHeight = lastBlock["Height"] + 1
