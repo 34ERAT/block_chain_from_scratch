@@ -30,9 +30,9 @@ class BaseDB:
             file.write(json.dumps(data))
 
 
-class BlockChainDB(BaseDB):
+class AccountDB(BaseDB):
     def __init__(self):
-        self.filename = "block_chain.json"
+        self.filename = "block_chain.jsonj"
         super().__init__()
 
     def LastBlock(self):
