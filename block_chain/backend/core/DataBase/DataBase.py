@@ -30,12 +30,18 @@ class BaseDB:
             file.write(json.dumps(data))
 
 
-class AccountDB(BaseDB):
+class BlockchainDB(BaseDB):
     def __init__(self):
-        self.filename = "block_chain.jsonj"
+        self.filename = "block_chain.json"
         super().__init__()
 
     def LastBlock(self):
         data = self.Read()
         if data:
             return data[-1]
+
+
+class AccountDB(BaseDB):
+    def __init__(self):
+        self.filename = "account.json"
+        super().__init__()

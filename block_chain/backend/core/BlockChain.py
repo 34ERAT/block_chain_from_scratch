@@ -1,7 +1,7 @@
 from block_chain.backend.core.Block import Block
 from block_chain.backend.core.BlockHeader import BlockHeader
 import sys
-from block_chain.backend.core.DataBase.DataBase import AccountDB
+from block_chain.backend.core.DataBase.DataBase import BlockchainDB
 from block_chain.backend.core.Tx import CoibaseTx
 from block_chain.backend.util.util import hash256
 import time
@@ -20,11 +20,11 @@ class BlockChain:
 
     def WriteOnDisk(self, Block):
         pass
-        blockchaindb = AccountDB()
+        blockchaindb = BlockchainDB()
         blockchaindb.write(Block)
 
     def get_last_block(self):
-        blockchaindb = AccountDB()
+        blockchaindb = BlockchainDB()
         return blockchaindb.LastBlock()
 
     def GenesisBlock(self):
